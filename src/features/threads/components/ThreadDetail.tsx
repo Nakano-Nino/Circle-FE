@@ -5,7 +5,6 @@ import {
 	AbsoluteCenter,
 	Avatar,
 	Box,
-	Button,
 	Divider,
 	HStack,
 	Heading,
@@ -14,14 +13,13 @@ import {
 } from "@chakra-ui/react";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { AiFillHeart } from "react-icons/ai";
 import { BsHeart } from "react-icons/bs";
-// import FormReplyFeature from "@/features/reply/components/FormReplyFeature";
 
 export default function ThreadDetail() {
 	const navigate = useNavigate();
 
 	const { getThreadDetail, isLoading } = useGetThreadDetail();
-	console.log(getThreadDetail);
 	
 
 	if (isLoading) {
@@ -40,7 +38,7 @@ export default function ThreadDetail() {
 						<HStack>
 							<Avatar
 								name={getThreadDetail.users.full_name}
-								src={getThreadDetail.users.profile_picture}
+								src={getThreadDetail.users.photo_profile}
 								size="sm"
 								mr="3"
 								_hover={{
@@ -66,6 +64,10 @@ export default function ThreadDetail() {
 							<Text color="gray.600">&bull;</Text>
 						</HStack>
 						<Box ms="3rem">
+							<Box mb={5}>
+								<Text fontSize="xl">{getThreadDetail.content}</Text>
+							</Box>
+
 							{getThreadDetail.image && (
 								<Box mt="0.5rem">
 									<Image
@@ -77,15 +79,11 @@ export default function ThreadDetail() {
 									/>
 								</Box>
 							)}
-
-							<Box my="10">
-								<Text fontSize="xl">{getThreadDetail.content}</Text>
-							</Box>
-							<Box>
+							<Box mt={5}>
 								<HStack fontSize="xs">
 									<HStack>
 										<BsHeart />
-										<Text>40</Text>
+										<Text>{getThreadDetail.likes.length}</Text>
 									</HStack>
 
 									<HStack>
@@ -98,14 +96,10 @@ export default function ThreadDetail() {
 					</Box>
 				</HStack>
 
-				<Box position="relative" padding="10">
+				<Box position="relative" pb={0} pt={5}>
 					<Divider />
-					<AbsoluteCenter bg="gray.800" px="4">
-						Replies
-					</AbsoluteCenter>
 				</Box>
 			</Box>
-			{/* <FormReplyFeature threadReply={getThreadDetail} /> */}
 		</Box>
 		);
 	}

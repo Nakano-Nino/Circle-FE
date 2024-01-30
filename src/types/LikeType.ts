@@ -3,6 +3,6 @@ import { UserType } from "./UserType";
 
 export type LikeType = {
     id: number;
-    thread: ThreadType;
-    user: UserType;
+    threads: ThreadType;
+    users: UserType;
 };

@@ -47,7 +47,7 @@ function ProfileComponent() {
                 <Text fontSize='sm' color='whiteAlpha.800'>{user.bio}</Text>
                 <HStack fontSize='sm'>
                     <HStack>
-                        <Text color='whiteAlpha.800'>100</Text>
+                        <Text color='whiteAlpha.800'>500</Text>
                         <Text color='whiteAlpha.600'>Following</Text>
                     </HStack>
                     <HStack>

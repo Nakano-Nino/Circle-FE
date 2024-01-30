@@ -5,16 +5,24 @@ import { BiLogOut } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AUTH_LOGOUT } from "@/store/slice/AuthSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 function NavbarComponent() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     function handleLogout() {
         // dispatch({ type: AUTH_LOGOUT });
         dispatch(AUTH_LOGOUT());
         navigate("/login");
     }
+
+    function handleHome() {
+        navigate("/");
+        queryClient.invalidateQueries({ queryKey: ["threads"] });
+    }
+
     return (
         <Stack h="full" justify="space-between" position={"fixed"}>
 
@@ -23,11 +31,11 @@ function NavbarComponent() {
 
                 <Stack mt={8} spacing={6}>
 
-                    <HStack cursor="pointer" color="white" onClick={() => navigate("/")}>
+                    <HStack cursor="pointer" color="white" onClick={() => handleHome()}>
                         <AiOutlineHome size={25} />
                         <Text fontSize="sm  ">Home</Text>
                     </HStack>
-                    <HStack cursor="pointer" color="white">
+                    <HStack cursor="pointer" color="white" onClick={() => navigate("/search")}>
                         <TbUserSearch size={25} />
                         <Text fontSize="sm  ">Search</Text>
                     </HStack>

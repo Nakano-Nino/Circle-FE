@@ -1,18 +1,20 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { Route, Routes, Navigate, useNavigate, Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { Route, Routes, Navigate, Outlet } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 // import { AUTH_CHECK, AUTH_ERROR } from "@/store/RootReducer";
 // import { RootState } from "./store/type/RootState";
-import { API, SetAuthToken } from "./config/api";
+// import { API, SetAuthToken } from "./config/api";
 import { FormLoginHook } from "./features/auth/hooks/FormLoginHook";
 
 
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
-import ThreadDetail from "./features/threads/components/ThreadDetail";
+import ThreadDetailFeature from "./pages/ThreadDetail/ThreadDetail";
+// import ThreadDetailFeature from "./pages/ThreadDetail/ThreadDetail";
 import Login from "./pages/Login/Login";
 import Main from "./layout/Main";
+import SearchUser from "./pages/SearchUser/SearchUser";
 
 
 const theme = extendTheme({
@@ -104,7 +106,8 @@ function App() {
         <Routes>
           <Route element={< IsNotLogin />} >
             <Route path="/" element={<Home />} />
-            <Route path="/thread/:id" element={<ThreadDetail />} />
+            <Route path="/thread/:id" element={<ThreadDetailFeature />} />
+            <Route path="/search" element={<SearchUser />} />
           </Route>
 
           <Route path="/" element={<IsLogin />}>

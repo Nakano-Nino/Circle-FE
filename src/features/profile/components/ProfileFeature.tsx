@@ -69,7 +69,7 @@ function ProfileFeature() {
                     {user?.username} <span style={{ color: "#1D9BF0" }}><VscVerifiedFilled /></span>
                 </Text>
                 <Text fontSize='xs' color='whiteAlpha.600'>@{user?.username}</Text>
-                <Text fontSize='sm' color='whiteAlpha.800' mt={2}>{user?.profile_description}</Text>
+                <Text fontSize='sm' color='whiteAlpha.800' mt={2}>{user?.bio}</Text>
                 <HStack fontSize='sm' mt={5}>
                     <HStack>
                         <Text color='whiteAlpha.800'>{randomNumber}</Text>

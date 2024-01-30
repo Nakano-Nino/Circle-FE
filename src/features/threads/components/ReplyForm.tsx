@@ -11,37 +11,42 @@ import {
 } from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/type/RootState";
-import { usePostReply } from "@/features/reply/hooks/PostReplyHook";
+import { RootState } from "@/store/Store";
+import { useReply } from "../hooks/useReply";
 import { Replies } from "@/types/ReplyType";
+import { useGetReply } from "@/features/reply/hooks/GetReplyHook";
 
-type RepliesProps = {
-	threadReply: {
-		replies: Replies[];
-	};
-};
+// type RepliesProps = {
+// 	threadReply: {
+// 		replies: Replies[];
+// 	};
+// };
 
-export default function ReplyForm({ threadReply }: RepliesProps) {
+export default function ReplyForm() {
 	const users = useSelector((state: RootState) => state.auth);
 	const {
-		handleButtonClick,
-		handleChange,
-		handlePost,
-		setImage,
-		isPending,
-		fileInputRef,
 		form,
-	} = usePostReply();
+		replies,
+		fileInputRef,
+		handleChange,
+		handleButtonClick,
+		handleSubmit
+	} = useReply();
+
+	const { getReplies, isLoading } = useGetReply();    
+    
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
 	return (
 		<>
-			<form encType="multipart/form-data">
+			<form onSubmit={handleSubmit} encType="multipart/form-data">
 				<FormControl mb={15}>
 					<HStack
-						mt={5}
-						p={15}
+						pt={5}
 						justify="space-between"
-						border={"1px solid white"}
+						// border={"1px solid white"}
 						borderRadius={"full"}>
 						<HStack w={"full"}>
 							<Avatar
@@ -70,13 +75,7 @@ export default function ReplyForm({ threadReply }: RepliesProps) {
 								<Input
 									type="file"
 									name="image"
-									onChange={(e) => {
-										if (e.target?.files) {
-											setImage(e.target?.files[0]);
-										} else {
-											setImage(null);
-										}
-									}}
+									onChange={handleChange}
 									style={{ display: "none" }}
 									ref={fileInputRef}
 								/>
@@ -86,20 +85,23 @@ export default function ReplyForm({ threadReply }: RepliesProps) {
 								size="xs"
 								px={3}
 								rounded="full"
-								onClick={() => handlePost()}
-								isLoading={isPending}>
-								Post
+								type="submit"
+							>
+								reply
 							</Button>
 						</HStack>
 					</HStack>
+					<Box position="relative" pt={5}>
+						<Divider />
+					</Box>
 				</FormControl>
 			</form>
-			{threadReply.replies.map((reply: Replies) => (
-				<Box key={reply.id} px="12" pt="3">
+			{replies.map((reply: Replies) => (
+				<Box px="0" pt="3">
 					<Box display="flex" gap="8px">
 						<Avatar
-							name={reply.user.full_name}
-							src={reply.user.photo_profile}
+							name={reply.users.full_name}
+							src={reply.users.photo_profile}
 							size="sm"
 							mr="3"
 							_hover={{
@@ -107,22 +109,14 @@ export default function ReplyForm({ threadReply }: RepliesProps) {
 							}}
 						/>
 						<Text fontWeight="semibold" fontSize="xs" color={"white"}>
-							{reply.user.full_name}
+							{reply.users.full_name}
+						</Text>
+						<Text color="gray.600" fontSize="xs">
+							@{reply.users.username}
 						</Text>
 					</Box>
-					<Box px={12} py={3}>
-						{reply.image && (
-							<Box>
-								<Image
-									src={reply.image}
-									boxSize="200px"
-									objectFit="cover"
-									alt="Dan Abramov"
-									rounded="md"
-									mb={3}
-								/>
-							</Box>
-						)}
+					<Box px={12} pb={3}>
+						{reply.image && <Image src={reply.image} />}
 
 						<Text color={"white"} fontSize="xs">
 							{reply.content}

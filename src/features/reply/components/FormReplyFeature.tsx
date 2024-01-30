@@ -97,12 +97,12 @@ export default function FormReplyFeature({ threadReply }: RepliesProps) {
 					</HStack>
 				</FormControl>
 			</form>
-			{threadReply.replies.map((reply: FormReplyType) => (
+			{threadReply.replies?.map((reply: FormReplyType) => (
 				<Box key={reply.id} px="12" pt="3">
 					<Box display="flex" gap="8px">
 						<Avatar
-							name={reply.user?.full_name}
-							src={reply.user?.photo_profile}
+							name={reply.users?.full_name}
+							src={reply.users?.photo_profile}
 							size="sm"
 							mr="3"
 							_hover={{
@@ -110,7 +110,7 @@ export default function FormReplyFeature({ threadReply }: RepliesProps) {
 							}}
 						/>
 						<Text fontWeight="semibold" fontSize="xs" color={"white"}>
-							{reply.user?.full_name}
+							{reply.users?.full_name}
 						</Text>
 					</Box>
 					<Box px={12} py={3}>

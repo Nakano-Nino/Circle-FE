@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 export function useGetThreadDetail() {
     const {id} = useParams();
-    console.log(id);
     
     const {
         data: getThreadDetail,

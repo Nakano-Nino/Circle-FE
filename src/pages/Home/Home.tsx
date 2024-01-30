@@ -1,42 +1,34 @@
-import { HStack, Stack, Text } from "@chakra-ui/react";
-import { BsArrowLeftShort } from "react-icons/bs";
-import { useState } from "react";
+import { Heading, Stack } from "@chakra-ui/react";
+// import { useState } from "react";
 import { ThreadType } from "@/types/ThreadType";
 import ThreadBase from "@/features/threads/components/ThreadBase";
-import { useGetThread } from "@/features/threads/hooks/useGetThread";
+import { useThread } from "@/features/threads/hooks/useThread";
 import ThreadForm from "@/features/threads/components/ThreadForm";
+import { Replies } from "@/types/ReplyType";
+import { LikeType } from "@/types/LikeType";
 
 function Home() {
-  const { getThread, isLoading } = useGetThread();
-  
-
-  const [detail, setDetail] = useState(false);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const {threads} = useThread();      
 
   return (
     <>
-      <>
-        <Text color="white" fontSize="lg">
-          Home
-        </Text>
+        <Heading size={"md"} color={"gray.100"}>Home</Heading>
         <ThreadForm />
-        <Stack mt={6}>
-          {getThread &&
-            getThread?.map((e: ThreadType) => (
+        <Stack mt={6} >
+          {threads &&
+            threads.map((thread: ThreadType) => (
               <ThreadBase
-                key={e.id}
-                id={e.id}
-                content={e.content}
-                image={e.image}
-                users={e.users}
-                created_at={e.created_at}
+                key={thread.id}
+                id={thread.id}
+                content={thread.content}
+                image={thread.image}
+                users={thread.users}
+                replies={thread.replies}
+                likes={thread.likes}
+                created_at={thread.created_at}
               />
             ))}
         </Stack>
-      </>
     </>
   );
 }

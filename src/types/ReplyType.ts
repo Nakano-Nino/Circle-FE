@@ -11,14 +11,12 @@ export type ReplyType= {
 
 export type PostReply={
     content: string;
-    thread: number;
+    image: Blob | MediaSource | string;
 }
 
 export type Replies = {
-    id: number;
     content: string;
     image: string;
-    user: UserType;
-    thread: ThreadType
-    created_at: string;
+    users: UserType;
+    threads: ThreadType;
 }

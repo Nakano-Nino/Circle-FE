@@ -2,22 +2,23 @@ import { SetAuthToken } from "@/config/api";
 import { UserType } from "@/types/UserType";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initiaslState: UserType = {
+const initialState: UserType = {
 	id: 0,
 	full_name: "",
 	username: "",
 	photo_profile: "",
-	bio: ""
+	bio: "",
+	followers: [],
+	following: []
 };
 
 export const AuthSlice = createSlice({
 	name: "auth",
-	initialState: initiaslState,
+	initialState: initialState,
 	reducers: {
 		AUTH_LOGIN: (_, action) => {
 			const payload = action.payload;
 			SetAuthToken(payload);
-			console.log(payload);
 			localStorage.setItem("token",payload);
 		},
 		AUTH_CHECK: (state, action) => {
@@ -26,6 +27,8 @@ export const AuthSlice = createSlice({
 			state.full_name= action.payload.full_name
 			state.username= action.payload.username
 			state.photo_profile= action.payload.photo_profile
+			state.followers= action.payload.followers
+			state.following= action.payload.following
 		},
 		AUTH_ERROR: () => {
 			localStorage.removeItem("token");

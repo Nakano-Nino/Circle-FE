@@ -11,7 +11,7 @@ import { UserType } from "./UserType";
 
 export type FormReplyType = {
     id?: number
-    user?: UserType
+    users?: UserType
     content?: string
     image?: string
 }

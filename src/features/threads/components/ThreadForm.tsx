@@ -7,30 +7,28 @@ import {
 	Input,
 } from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
-import { usePostThread } from "@/features/threads/hooks/usePostThread";
+import { useThread } from "../hooks/useThread";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/Store";
 
 export default function ThreadForm() {
 	const user = useSelector((state: RootState) => state.auth);
 	const {
-		handleButtonClick,
-		handleChange,
-		handlePost,
-		setImage,
-		isPending,
-		fileInputRef,
 		form,
-	} = usePostThread();
+		fileInputRef,
+		handleChange,
+		handleButtonClick,
+		handleSubmit
+	} = useThread();
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === "Enter") {
-			handlePost;
-		}
-	};
+	// const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+	// 	if (event.key === "Enter") {
+	// 		handlePost;
+	// 	}
+	// };
 
 	return (
-		<form encType="multipart/form-data">
+		<form onSubmit={handleSubmit} encType="multipart/form-data">
 			<FormControl>
 				<HStack
 					mt={5}
@@ -57,7 +55,7 @@ export default function ThreadForm() {
 							rounded={"10"}
 							onChange={handleChange}
 							value={form.content}	
-							onKeyDown={handleKeyDown}
+							// onKeyDown={handleKeyDown}
 						/>
 					</HStack>
 					<HStack>
@@ -66,13 +64,7 @@ export default function ThreadForm() {
 							<Input
 								type="file"
 								name="image"
-								onChange={(e) => {
-									if (e.target?.files) {
-										setImage(e.target?.files[0]);
-									} else {
-										setImage(null);
-									}
-								}}
+								onChange={handleChange}
 								style={{ display: "none" }}
 								ref={fileInputRef}
 							/>
@@ -84,8 +76,8 @@ export default function ThreadForm() {
 							px={3}
 							rounded="full"
 							type="submit"
-							onClick={() => handlePost()}
-							isLoading={isPending}
+							// onClick={() => handlePost()}
+							// isLoading={isPending}
 							>
 							Post
 						</Button>

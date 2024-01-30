@@ -1,7 +1,7 @@
 import { ThreadPost } from "@/types/ThreadType";
 import { API } from "@/config/api";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ChangeEvent, useRef, useState } from "react";
 
 export function usePostThread() {
 	const [form, setForm] = useState<ThreadPost>({
@@ -43,14 +43,19 @@ export function usePostThread() {
 		mutationFn: async () => {
 			const formData = new FormData();
 			if (image) {
-				formData.append("image", image);
+				formData.append("image", image as File);
 			}
 			formData.append("content", form.content);
+			console.log(formData);
 			
-			await API.post("/thread", formData);
+			await API.post("/thread", formData, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`
+				}
+			});
 		},
 		onSuccess: () => {
-			QueryClient.invalidateQueries({ queryKey: ["thread"] });
+			QueryClient.invalidateQueries({ queryKey: ["threads"] });
 			setForm({
 				content: "",
 			});

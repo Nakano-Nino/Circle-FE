@@ -309,3 +309,21 @@
 
 
 // // export default ThreadDetailFeature
+
+import ThreadDetail from "@/features/threads/components/ThreadDetail";
+import ReplyForm from "@/features/threads/components/ReplyForm";
+import ReplyFeature from "@/features/reply/components/ReplyFeature";
+import { Replies } from "@/types/ReplyType";
+import { useGetReply } from "@/features/reply/hooks/GetReplyHook";
+
+function ThreadDetailFeature() {
+
+    return (
+        <>
+            <ThreadDetail />
+                <ReplyForm />
+        </>
+    )
+}
+
+export default ThreadDetailFeature

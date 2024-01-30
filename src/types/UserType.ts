@@ -1,10 +1,11 @@
 export type UserType = {
   id: number;
   full_name: string;
-  profile_description?: string;
   username: string;
-  photo_profile?: string;
+  photo_profile: string;
   bio: string;
+  followers: [];
+  following: [];
 };
 
 export type UserRegisterType = {
